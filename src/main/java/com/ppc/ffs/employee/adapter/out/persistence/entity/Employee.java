@@ -4,7 +4,7 @@ import com.ppc.ffs.branch.adapter.out.persistence.entity.Branch;
 import com.ppc.ffs.lesson.adapter.out.persistence.entity.Lesson;
 import com.ppc.ffs.member.adapter.out.persistence.entity.Member;
 import com.ppc.ffs.purchase.adapter.out.persistence.entity.PurchaseHistory;
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -15,12 +15,22 @@ import java.util.List;
 @Table(name = "EMPLOYEE")
 public class Employee {
 
+    @Getter
+    @RequiredArgsConstructor
+    public enum Responsibility {
+        CEO("대표"),
+        MANAGER("매니저"),
+        TRAINER("트레이너");
+
+        private final String text;
+    }
+
     @Id
     @Column(name = "EMPLOYEE_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long employeeId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "BRANCH_ID")
     private Branch branch;
 
@@ -28,7 +38,7 @@ public class Employee {
     private String name;
 
     @Column(name = "RESPONSIBILITY")
-    private String Responsibility;
+    private String responsibility;
 
     @Column(name = "ADDRESS")
     private String address;
@@ -44,6 +54,12 @@ public class Employee {
 
     @Column(name = "LOGIN_PASSWORD")
     private String password;
+
+    @Column(name = "PASSWORD_TYPE")
+    private String passwordType;
+
+    @Column(name = "PASSWORD_SALT")
+    private String passwordSalt;
 
     @OneToMany(mappedBy = "employee")
     private List<Member> memberList = new ArrayList<>();

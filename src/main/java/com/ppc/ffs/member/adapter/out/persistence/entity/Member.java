@@ -7,15 +7,20 @@ import com.ppc.ffs.locker.adapter.out.persistence.entity.Locker;
 import com.ppc.ffs.membership.adapter.out.persistence.entity.Membership;
 import com.ppc.ffs.pt.adapter.out.persistence.entity.Pt;
 import com.ppc.ffs.purchase.adapter.out.persistence.entity.PurchaseHistory;
+import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
+@Getter
+@NoArgsConstructor
 @Entity
-@Data
-@Table(name = "MEMBER")
+@Table(name = "MEMBER", uniqueConstraints = {@UniqueConstraint(name = "LOGINID_UNIQUE", columnNames = {"LOGIN_ID"})})
 public class Member {
 
     @Id
@@ -31,16 +36,16 @@ public class Member {
     @JoinColumn(name = "EMPLOYEE_ID")
     private Employee employee;
 
-    @Column(name = "NAME")
+    @Column(name = "NAME", nullable = false)
     private String name;
 
     @Column(name = "STATUS")
     private String status;
 
-    @Column(name = "LOGIN_ID")
+    @Column(name = "LOGIN_ID", nullable = false)
     private String loginId;
 
-    @Column(name = "LOGIN_PASSWORD")
+    @Column(name = "LOGIN_PASSWORD", nullable = false)
     private String loginPassword;
 
     @Column(name = "PASSWORD_TYPE")
@@ -48,6 +53,29 @@ public class Member {
 
     @Column(name = "PASSWORD_SALT")
     private String passwordSalt;
+
+    @Builder
+    public Member(Long memberId, Branch branch, Employee employee, String name, String status, String loginId, String loginPassword, String passwordType, String passwordSalt) {
+        this.memberId = memberId;
+        this.branch = branch;
+        this.employee = employee;
+        this.name = name;
+        this.status = status;
+        this.loginId = loginId;
+        this.loginPassword = loginPassword;
+        this.passwordType = passwordType;
+        this.passwordSalt = passwordSalt;
+    }
+
+//    @Builder
+//    public Member(String name, String status, String loginId, String loginPassword, String passwordType, String passwordSalt) {
+//        this.name = name;
+//        this.status = status;
+//        this.loginId = loginId;
+//        this.loginPassword = loginPassword;
+//        this.passwordType = passwordType;
+//        this.passwordSalt = passwordSalt;
+//    }
 
     @OneToOne(mappedBy = "member")
     private Membership membership;

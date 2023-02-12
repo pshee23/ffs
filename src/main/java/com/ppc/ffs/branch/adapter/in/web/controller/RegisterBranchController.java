@@ -28,6 +28,7 @@ public class RegisterBranchController {
 	@PostMapping("/new")
 	public ResponseEntity<String> registerBranch(@RequestBody BranchCreateRequest request) {
 		BranchRegisterInfo createInfo = request.of();
+
 		BranchInfo branchInfo = registerBranchUseCase.registerBranch(createInfo);
 		return getJsonResponseEntity(branchInfo, HttpStatus.OK);
 	}

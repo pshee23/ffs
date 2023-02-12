@@ -20,7 +20,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @Entity
-@Table(name = "MEMBER", uniqueConstraints = {@UniqueConstraint(name = "LOGINID_UNIQUE", columnNames = {"loginId"})})
+@Table(name = "MEMBER", uniqueConstraints = {@UniqueConstraint(name = "LOGINID_UNIQUE", columnNames = {"LOGIN_ID"})})
 public class Member {
 
     @Id

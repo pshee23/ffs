@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
-@Controller
+@Controller("/member/")
 @RequiredArgsConstructor
 public class MemberController {
 
     private final MemberUseCase memberUseCase;
 
-    @PostMapping("/member/add")
+    @PostMapping("add")
     public ResponseEntity<Object> addMember(@RequestBody MemberRequest memberRequest) {
 
         memberUseCase.addMember(memberRequest);
@@ -28,10 +28,18 @@ public class MemberController {
         return  new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/member/list")
-    public ResponseEntity<Object> SearchMember(@RequestParam MemberRequest memberRequest) {
+    @GetMapping("list")
+    public ResponseEntity<Object> searchMember(@RequestParam MemberRequest memberRequest) {
 
         List<MemberResponse> memberList = memberUseCase.selectMemberList(memberRequest);
+
+        return ResponseEntity.ok(memberList);
+    }
+
+    @PostMapping("edit")
+    public ResponseEntity<Object> editMember(@RequestBody MemberRequest memberRequest) {
+
+        memberUseCase.updateMember(memberRequest);
 
         return  new ResponseEntity<>(HttpStatus.OK);
     }

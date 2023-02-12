@@ -11,7 +11,7 @@ public class MemberPersistenceAdapter implements MemberPort {
     private MemberRepository memberRepository;
 
     @Override
-    public Member insertMember(Member member) {
+    public Member saveMember(Member member) {
          return memberRepository.save(member);
     }
 

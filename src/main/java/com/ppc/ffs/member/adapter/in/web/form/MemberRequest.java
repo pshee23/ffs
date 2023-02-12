@@ -11,6 +11,7 @@ public class MemberRequest {
 
     //TODO Branch랑 Employee는 어떻게?
 
+    private Long memberId;
     private String name;
 
     private String status;

@@ -10,4 +10,6 @@ public interface MemberUseCase {
     public void addMember(MemberRequest memberRequest);
 
     List<MemberResponse> selectMemberList(MemberRequest memberRequest);
+
+    void updateMember(MemberRequest memberRequest);
 }

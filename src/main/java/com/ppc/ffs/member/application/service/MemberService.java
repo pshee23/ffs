@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,6 +19,7 @@ public class MemberService implements MemberUseCase {
 
     @Override
     public void addMember(MemberRequest memberRequest) {
+        //TODO 브랜치와 같은 부가정보는 조회해서 가져온다.
         Member member  = Member.builder()
                 .name(memberRequest.getName())
                 .status(memberRequest.getStatus())
@@ -27,17 +29,29 @@ public class MemberService implements MemberUseCase {
                 .passwordSalt(memberRequest.getPasswordSalt())
                 .build();
 
-        memberPort.insertMember(member);
+        memberPort.saveMember(member);
     }
 
 
     @Override
     public List<MemberResponse> selectMemberList(MemberRequest memberRequest) {
-        //TODO 값이 있는 경우에만 쿼리에 추가하려면 어떻게 해야할까?
-
         List<Member> memberList = memberPort.findByNameOrLoginId(memberRequest.getName(),memberRequest.getLoginId());
 
-        
+        //TODO 변환할때 for문으로 변경
+        return null;
+    }
+
+    @Override
+    public void updateMember(MemberRequest memberRequest) {
+        Optional<Member> optionalMember =  memberPort.findById(memberRequest.getMemberId());
+        Member member = null;
+        if (optionalMember.isPresent()) {
+            member = optionalMember.get();
+        }
+        //TODO 새로운 값 세팅을 어떻게 할꺼냐
+
+        memberPort.saveMember(member);
+
     }
 
 }

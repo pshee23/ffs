@@ -25,6 +25,16 @@ public class Employee {
         private final String text;
     }
 
+    @Getter
+    @RequiredArgsConstructor
+    public enum Status {
+
+        LEAVE_ABSENCE("휴직"),
+        CURRENT_EMPLOYED("재직");
+
+        private final String text;
+    }
+
     @Id
     @Column(name = "EMPLOYEE_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

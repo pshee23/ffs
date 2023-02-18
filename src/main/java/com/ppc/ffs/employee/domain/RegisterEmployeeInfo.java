@@ -1,19 +1,17 @@
-package com.ppc.ffs.employee.adapter.in.web.form;
+package com.ppc.ffs.employee.domain;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
 
-@Builder @Getter
-@NoArgsConstructor
-@AllArgsConstructor
-public class RegisterEmployeeRequest {
-
+@Getter
+@Builder
+public class RegisterEmployeeInfo {
     private Long branchId;
     private String employeeName;
     private String responsibility;
     private String address;
     private String phoneNumber;
     private String status;
-    private String loginId;
+    private String id;
     private String password;
-
 }

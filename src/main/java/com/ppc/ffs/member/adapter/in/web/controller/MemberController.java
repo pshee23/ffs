@@ -2,9 +2,13 @@ package com.ppc.ffs.member.adapter.in.web.controller;
 
 import com.ppc.ffs.member.adapter.in.web.form.MemberRequest;
 import com.ppc.ffs.member.adapter.in.web.form.MemberResponse;
+import com.ppc.ffs.member.adapter.in.web.form.MemberSearchForm;
 import com.ppc.ffs.member.application.port.in.MemberUseCase;
 import com.ppc.ffs.util.APIResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -32,11 +36,12 @@ public class MemberController {
     }
 
     @GetMapping("list")
-    public ResponseEntity<Object> searchMember(@RequestParam MemberRequest memberRequest) {
+    public ResponseEntity<Object> searchMember(@RequestParam MemberSearchForm form,
+                                               @PageableDefault(size = 15, sort = "regDate", direction = Sort.Direction.DESC) Pageable pageable) {
 
-        List<MemberResponse> memberList = memberUseCase.selectMemberList(memberRequest);
+        List<MemberResponse> memberList = memberUseCase.searchMemberList(form,pageable);
 
-        return ResponseEntity.ok(memberList);
+        return APIResponse.success(memberList);
     }
 
     @PostMapping("edit")

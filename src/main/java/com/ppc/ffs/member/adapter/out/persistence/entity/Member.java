@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -54,8 +55,10 @@ public class Member {
     @Column(name = "PASSWORD_SALT")
     private String passwordSalt;
 
+    @Column(name = "REG_DATE")
+    private Date regDate;
     @Builder
-    public Member(Long memberId, Branch branch, Employee employee, String name, String status, String loginId, String loginPassword, String passwordType, String passwordSalt) {
+    public Member(Long memberId, Branch branch, Employee employee, String name, String status, String loginId, String loginPassword, String passwordType, String passwordSalt,Date regDate) {
         this.memberId = memberId;
         this.branch = branch;
         this.employee = employee;
@@ -65,6 +68,7 @@ public class Member {
         this.loginPassword = loginPassword;
         this.passwordType = passwordType;
         this.passwordSalt = passwordSalt;
+        this.regDate = regDate;
     }
 
 //    @Builder

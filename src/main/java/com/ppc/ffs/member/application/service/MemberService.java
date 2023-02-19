@@ -6,14 +6,18 @@ import com.ppc.ffs.employee.application.port.out.SelectEmployeePort;
 import com.ppc.ffs.employee.domain.EmployeeInfo;
 import com.ppc.ffs.member.adapter.in.web.form.MemberRequest;
 import com.ppc.ffs.member.adapter.in.web.form.MemberResponse;
+import com.ppc.ffs.member.adapter.in.web.form.MemberSearchForm;
 import com.ppc.ffs.member.adapter.out.persistence.entity.Member;
 import com.ppc.ffs.member.application.port.in.MemberUseCase;
 import com.ppc.ffs.member.application.port.out.MemberPort;
 import com.ppc.ffs.member.domain.MemberInfo;
 import com.ppc.ffs.util.CommonService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -59,6 +63,7 @@ public class MemberService implements MemberUseCase {
                 .passwordType(passwordType)
                 .passwordSalt(passwordSalt)
                 .status(memberRequest.getStatus())
+                .regDate(new Date())
                 .build();
 
         memberPort.saveMember(member);
@@ -68,9 +73,31 @@ public class MemberService implements MemberUseCase {
     @Override
     public List<MemberResponse> selectMemberList(MemberRequest memberRequest) {
         List<Member> memberList = memberPort.findByNameOrLoginId(memberRequest.getName(),memberRequest.getLoginId());
+        List<MemberResponse> memberResponseList = new ArrayList<>();
+        if(memberList == null || memberList.size() == 0){
+            return memberResponseList;
+        }
+        //TODO Member > MemberInfo > MemberResponse로 바꿔야할까??
+        for(Member member : memberList){
+            MemberResponse memberResponse = MemberUtil.getInstance().convertMemberToResponse(member);
+            memberResponseList.add(memberResponse);
+        }
+        return memberResponseList;
+    }
 
-        //TODO 변환할때 for문으로 변경
-        return null;
+    @Override
+    public List<MemberResponse> searchMemberList(MemberSearchForm form, Pageable pageable) {
+        List<Member> memberList = memberPort.findByNameOrLoginId(form.getName(),form.getLoginId(),pageable);
+        List<MemberResponse> memberResponseList = new ArrayList<>();
+        if(memberList == null || memberList.size() == 0){
+            return memberResponseList;
+        }
+        //TODO Member > MemberInfo > MemberResponse로 바꿔야할까??
+        for(Member member : memberList){
+            MemberResponse memberResponse = MemberUtil.getInstance().convertMemberToResponse(member);
+            memberResponseList.add(memberResponse);
+        }
+        return memberResponseList;
     }
 
     @Override

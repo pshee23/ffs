@@ -11,6 +11,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -37,6 +38,8 @@ public class MemberInfo {
 
     private String passwordSalt;
 
+    private Date regDate;
+
     /** 사용자 기본 정보 끝 */
 
     /** 추가 데이터 시작 */
@@ -53,7 +56,7 @@ public class MemberInfo {
 
 
     @Builder
-    public MemberInfo(Long memberId, Branch branch, Employee employee, String name, String status, String loginId, String loginPassword, String passwordType, String passwordSalt) {
+    public MemberInfo(Long memberId, Branch branch, Employee employee, String name, String status, String loginId, String loginPassword, String passwordType, String passwordSalt,Date regDate) {
         this.memberId = memberId;
         this.branch = branch;
         this.employee = employee;
@@ -63,5 +66,6 @@ public class MemberInfo {
         this.loginPassword = loginPassword;
         this.passwordType = passwordType;
         this.passwordSalt = passwordSalt;
+        this.regDate = regDate;
     }
 }

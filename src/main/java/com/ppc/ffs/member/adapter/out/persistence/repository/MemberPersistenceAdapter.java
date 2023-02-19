@@ -4,6 +4,7 @@ import com.ppc.ffs.member.adapter.out.persistence.entity.Member;
 import com.ppc.ffs.member.application.port.out.MemberPort;
 import com.ppc.ffs.member.application.service.MemberUtil;
 import com.ppc.ffs.member.domain.MemberInfo;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,8 +12,6 @@ import java.util.Optional;
 public class MemberPersistenceAdapter implements MemberPort {
 
     private MemberRepository memberRepository;
-
-    private MemberUtil memberUtil;
 
     @Override
     public Member saveMember(Member member) {
@@ -39,8 +38,13 @@ public class MemberPersistenceAdapter implements MemberPort {
     }
 
     @Override
+    public List<Member> findByNameOrLoginId(String name, String loginId, Pageable pageable) {
+        return memberRepository.findByNameOrLoginId(name,loginId,pageable);
+    }
+
+    @Override
     public MemberInfo findByLoginId(String loginId) {
 
-        return memberUtil.convertMemberToBean(memberRepository.findByLoginId(loginId));
+        return MemberUtil.getInstance().convertMemberToBean(memberRepository.findByLoginId(loginId));
     }
 }

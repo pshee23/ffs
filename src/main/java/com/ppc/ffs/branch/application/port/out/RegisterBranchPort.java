@@ -1,7 +1,8 @@
 package com.ppc.ffs.branch.application.port.out;
 
-import com.ppc.ffs.branch.adapter.out.persistence.entity.Branch;
+import com.ppc.ffs.branch.domain.BranchInfo;
+import com.ppc.ffs.branch.domain.BranchRegisterInfo;
 
 public interface RegisterBranchPort {
-	Branch saveBranch(Branch branch);
+	BranchInfo saveBranch(BranchRegisterInfo createInfo);
 }

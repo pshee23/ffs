@@ -9,8 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class MemberRequest {
 
-    //TODO Branch랑 Employee는 어떻게?
-
     private Long memberId;
     private String name;
 
@@ -20,9 +18,9 @@ public class MemberRequest {
 
     private String loginPassword;
 
-    private String passwordType;
+    /** 회원 추가 시 필요한 지점정보와 직원 정보의 키값은 화면으로부터 받아온다.*/
+    private Long branchId;
 
-    private String passwordSalt;
-
+    private Long employeeId;
 
 }

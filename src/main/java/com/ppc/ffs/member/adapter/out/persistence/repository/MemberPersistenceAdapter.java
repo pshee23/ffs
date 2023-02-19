@@ -2,6 +2,8 @@ package com.ppc.ffs.member.adapter.out.persistence.repository;
 
 import com.ppc.ffs.member.adapter.out.persistence.entity.Member;
 import com.ppc.ffs.member.application.port.out.MemberPort;
+import com.ppc.ffs.member.application.service.MemberUtil;
+import com.ppc.ffs.member.domain.MemberInfo;
 
 import java.util.List;
 import java.util.Optional;
@@ -9,6 +11,8 @@ import java.util.Optional;
 public class MemberPersistenceAdapter implements MemberPort {
 
     private MemberRepository memberRepository;
+
+    private MemberUtil memberUtil;
 
     @Override
     public Member saveMember(Member member) {
@@ -32,5 +36,11 @@ public class MemberPersistenceAdapter implements MemberPort {
     @Override
     public List<Member> findByNameOrLoginId(String name, String loginId) {
         return memberRepository.findByNameOrLoginId(name,loginId);
+    }
+
+    @Override
+    public MemberInfo findByLoginId(String loginId) {
+
+        return memberUtil.convertMemberToBean(memberRepository.findByLoginId(loginId));
     }
 }

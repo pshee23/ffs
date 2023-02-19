@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface MemberUseCase {
 
-    public void addMember(MemberRequest memberRequest);
+    public void addMember(MemberRequest memberRequest) throws Exception;
 
     List<MemberResponse> selectMemberList(MemberRequest memberRequest);
 

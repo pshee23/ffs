@@ -3,6 +3,7 @@ package com.ppc.ffs.member.adapter.in.web.controller;
 import com.ppc.ffs.member.adapter.in.web.form.MemberRequest;
 import com.ppc.ffs.member.adapter.in.web.form.MemberResponse;
 import com.ppc.ffs.member.application.port.in.MemberUseCase;
+import com.ppc.ffs.util.APIResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,11 +22,13 @@ public class MemberController {
     private final MemberUseCase memberUseCase;
 
     @PostMapping("add")
-    public ResponseEntity<Object> addMember(@RequestBody MemberRequest memberRequest) {
+    public ResponseEntity<Object> addMember(@RequestBody MemberRequest memberRequest) throws Exception{
+
+        //TODO 데이터 Validation 처리 필요
 
         memberUseCase.addMember(memberRequest);
 
-        return  new ResponseEntity<>(HttpStatus.OK);
+        return APIResponse.success();
     }
 
     @GetMapping("list")

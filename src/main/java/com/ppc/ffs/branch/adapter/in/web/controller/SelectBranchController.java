@@ -13,24 +13,31 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ppc.ffs.branch.application.port.in.SelectBranchUseCase;
 import com.ppc.ffs.branch.domain.BranchInfo;
+import com.ppc.ffs.employee.adapter.out.persistence.entity.Employee;
 
-@RequestMapping("/branch")
+@RequestMapping("/branch/list")
 @RestController
 public class SelectBranchController {
 
 	@Autowired
 	private SelectBranchUseCase selectBranchUseCase;
 	
-	@GetMapping("/all")
+	@GetMapping
 	public ResponseEntity<String> selectAllBranch() {
 		List<BranchInfo> allBranchList = selectBranchUseCase.selectAllBranch();
 		return getJsonResponseEntity(allBranchList, HttpStatus.OK);
 	}
 	
-	@GetMapping("/one/{branchId}")
+	@GetMapping("/{branchId}")
 	public ResponseEntity<String> selectOneBranch(@PathVariable Long branchId) {
 		BranchInfo branchInfo = selectBranchUseCase.selectBranch(branchId);
 		return getJsonResponseEntity(branchInfo, HttpStatus.OK);
+	}
+	
+	@GetMapping("/{branchId}/employee")
+	public ResponseEntity<String> selectBranchEmployee(@PathVariable Long branchId) {
+		List<Employee> employeeList = selectBranchUseCase.selectBranchEmployee(branchId);
+		return getJsonResponseEntity(employeeList, HttpStatus.OK);
 	}
 	
 	public ResponseEntity<String> getJsonResponseEntity(Object obj, HttpStatus status) {

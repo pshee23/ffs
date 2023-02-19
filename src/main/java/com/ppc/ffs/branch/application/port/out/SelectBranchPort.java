@@ -1,11 +1,13 @@
 package com.ppc.ffs.branch.application.port.out;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.ppc.ffs.branch.adapter.out.persistence.entity.Branch;
+import com.ppc.ffs.branch.domain.BranchInfo;
+import com.ppc.ffs.employee.adapter.out.persistence.entity.Employee;
 
 public interface SelectBranchPort {
-	List<Branch> findAllBranch();
-	Optional<Branch> findById(Long id);
+	List<BranchInfo> findAllBranch();
+	BranchInfo findBranchInfoById(Long id);
+	List<Employee> findEmployeeListById(Long id);
 }

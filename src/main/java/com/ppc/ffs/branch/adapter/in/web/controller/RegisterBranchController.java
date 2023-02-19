@@ -25,14 +25,14 @@ public class RegisterBranchController {
 	@Autowired
 	private RegisterBranchUseCase registerBranchUseCase;
 	
-	@PostMapping("/new")
+	@PostMapping
 	public ResponseEntity<String> registerBranch(@RequestBody BranchCreateRequest request) {
 		BranchRegisterInfo createInfo = request.of();
 		BranchInfo branchInfo = registerBranchUseCase.registerBranch(createInfo);
 		return getJsonResponseEntity(branchInfo, HttpStatus.OK);
 	}
 	
-	@PutMapping("/modify/{branchId}")
+	@PutMapping("/{branchId}")
 	public ResponseEntity<String> modifyBranch(@PathVariable Long branchId, @RequestBody BranchUpdateRequest request) {
 		BranchModifyInfo modifyInfo = request.of(branchId);
 		BranchInfo branchInfo = registerBranchUseCase.modifyBranch(modifyInfo);

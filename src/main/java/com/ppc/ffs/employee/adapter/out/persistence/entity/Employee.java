@@ -10,8 +10,10 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Entity
+@ToString(exclude = "branch")
 @Table(name = "EMPLOYEE")
 public class Employee {
 

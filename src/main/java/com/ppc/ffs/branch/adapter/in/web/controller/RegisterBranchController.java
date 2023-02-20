@@ -1,10 +1,11 @@
 package com.ppc.ffs.branch.adapter.in.web.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,15 +27,15 @@ public class RegisterBranchController {
 	private RegisterBranchUseCase registerBranchUseCase;
 	
 	@PostMapping
-	public ResponseEntity<String> registerBranch(@RequestBody BranchCreateRequest request) {
+	public ResponseEntity<String> registerBranch(@RequestBody @Valid BranchCreateRequest request) {
 		BranchRegisterInfo createInfo = request.of();
 		BranchInfo branchInfo = registerBranchUseCase.registerBranch(createInfo);
 		return getJsonResponseEntity(branchInfo, HttpStatus.OK);
 	}
 	
-	@PutMapping("/{branchId}")
-	public ResponseEntity<String> modifyBranch(@PathVariable Long branchId, @RequestBody BranchUpdateRequest request) {
-		BranchModifyInfo modifyInfo = request.of(branchId);
+	@PutMapping
+	public ResponseEntity<String> modifyBranch(@RequestBody @Valid BranchUpdateRequest request) {
+		BranchModifyInfo modifyInfo = request.of();
 		BranchInfo branchInfo = registerBranchUseCase.modifyBranch(modifyInfo);
 		return getJsonResponseEntity(branchInfo, HttpStatus.OK);
 	}

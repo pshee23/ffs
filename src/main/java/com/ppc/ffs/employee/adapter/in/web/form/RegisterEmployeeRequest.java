@@ -7,12 +7,11 @@ import lombok.*;
 @AllArgsConstructor
 public class RegisterEmployeeRequest {
 
-    private Long branchId;
+    private String branchName;
     private String employeeName;
     private String responsibility;
     private String address;
     private String phoneNumber;
-    private String status;
     private String loginId;
     private String password;
 

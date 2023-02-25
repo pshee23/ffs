@@ -1,9 +1,12 @@
 package com.ppc.ffs.employee.adapter.out.persistence.repository;
 
+import com.ppc.ffs.branch.adapter.out.persistence.entity.Branch;
+import com.ppc.ffs.branch.adapter.out.persistence.repository.BranchRepository;
 import com.ppc.ffs.employee.adapter.out.persistence.entity.Employee;
 import com.ppc.ffs.employee.application.port.out.InsertEmployeePort;
 import com.ppc.ffs.employee.application.port.out.SelectEmployeePort;
 import com.ppc.ffs.employee.domain.EmployeeInfo;
+import com.ppc.ffs.employee.domain.RegisterEmployeeInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +21,7 @@ public class EmployeePersistenceAdapter implements
 
     private final EmployeeRepository employeeRepository;
     private final EmployeeInfoMapper employeeInfoMapper;
+    private final BranchRepository branchRepository;
 
     @Override
     public EmployeeInfo selectEmployeeInfo(Long employeeId) {
@@ -28,8 +32,13 @@ public class EmployeePersistenceAdapter implements
     }
 
     @Override
-    public Employee insertEmployee(Employee newEmployee) {
-        return employeeRepository.save(newEmployee);
+    public Employee insertEmployee(RegisterEmployeeInfo registerEmployeeInfo) {
+        Long branchId = registerEmployeeInfo.getBranchId();
+        Optional<Branch> branchOptional = branchRepository.findById(branchId);
+        Branch branch = branchOptional.orElseThrow(EntityNotFoundException::new);
+
+        Employee employee = employeeInfoMapper.mapToEmployee(registerEmployeeInfo, branch);
+        return employeeRepository.save(employee);
     }
 }
 

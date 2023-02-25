@@ -101,4 +101,12 @@ public class Employee {
             lesson.setEmployee(this);
         }
     }
+
+    public void updateEmployeeInfo(Branch branch, String responsibility, String address, String phoneNumber, String status) {
+        this.setBranch(branch);
+        this.responsibility = responsibility;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.status = status;
+    }
 }

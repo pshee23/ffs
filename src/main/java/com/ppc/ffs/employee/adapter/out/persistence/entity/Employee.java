@@ -15,12 +15,29 @@ import java.util.List;
 @Table(name = "EMPLOYEE")
 public class Employee {
 
+    /**
+     * 직책
+     */
     @Getter
     @RequiredArgsConstructor
     public enum Responsibility {
         CEO("대표"),
         MANAGER("매니저"),
         TRAINER("트레이너");
+
+        private final String text;
+    }
+
+    /**
+     * 재직 상태
+     */
+    @Getter
+    @RequiredArgsConstructor
+    public enum Status {
+        DURING_OFFICE("재직"),
+        LEAVE_OF_ABSENCE("휴직"),
+        QUIT("퇴직");
+
 
         private final String text;
     }

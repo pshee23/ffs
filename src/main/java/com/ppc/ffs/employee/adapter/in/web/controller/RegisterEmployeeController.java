@@ -4,7 +4,6 @@ import com.ppc.ffs.employee.adapter.in.web.form.RegisterEmployeeRequest;
 import com.ppc.ffs.employee.application.port.in.RegisterEmployeeUseCase;
 import com.ppc.ffs.employee.domain.RegisterEmployeeInfo;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,9 +18,9 @@ public class RegisterEmployeeController {
     @PostMapping("/employee")
     public ResponseEntity<Object> registerEmployee(@RequestBody RegisterEmployeeRequest registerEmployeeRequest) {
         RegisterEmployeeInfo registerEmployeeInfo = mapRequestToRegisterEmployeeInfo(registerEmployeeRequest);
-        boolean isSuccess = registerEmployeeUseCase.registerEmployee(registerEmployeeInfo);
+        Long employeeId = registerEmployeeUseCase.registerEmployee(registerEmployeeInfo);
 
-        return  isSuccess ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.SERVICE_UNAVAILABLE);
+        return  ResponseEntity.ok(employeeId);
     }
 
     private RegisterEmployeeInfo mapRequestToRegisterEmployeeInfo(RegisterEmployeeRequest request) {

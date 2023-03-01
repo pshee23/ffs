@@ -1,6 +1,5 @@
 package com.ppc.ffs.employee.application.service;
 
-import com.ppc.ffs.employee.adapter.in.web.form.RegisterEmployeeRequest;
 import com.ppc.ffs.employee.adapter.out.persistence.entity.Employee;
 import com.ppc.ffs.employee.application.port.in.RegisterEmployeeUseCase;
 import com.ppc.ffs.employee.application.port.out.InsertEmployeePort;
@@ -15,10 +14,10 @@ public class RegisterEmployeeService implements RegisterEmployeeUseCase {
     private final InsertEmployeePort insertEmployeePort;
 
     @Override
-    public boolean registerEmployee(RegisterEmployeeInfo registerEmployeeInfo) {
+    public Long registerEmployee(RegisterEmployeeInfo registerEmployeeInfo) {
         Employee employee = insertEmployeePort.insertEmployee(registerEmployeeInfo);
 
-        return employee.getEmployeeId() == null;
+        return employee.getEmployeeId();
     }
 
 }

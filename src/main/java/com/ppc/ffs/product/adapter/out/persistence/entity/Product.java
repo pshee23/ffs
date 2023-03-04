@@ -27,8 +27,8 @@ public class Product {
     @Column(name = "NAME")
     private String name;
 
-    @Column(name = "AMOUNT")
-    private Long amount;
+    @Column(name = "PRICE")
+    private Long price;
 
     @Column(name = "PRODUCT_TYPE")
     private String productType;

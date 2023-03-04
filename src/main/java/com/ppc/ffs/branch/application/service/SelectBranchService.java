@@ -4,10 +4,11 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.ppc.ffs.branch.adapter.in.web.form.BranchSelectResponse;
 import com.ppc.ffs.branch.application.port.in.SelectBranchUseCase;
 import com.ppc.ffs.branch.application.port.out.SelectBranchPort;
 import com.ppc.ffs.branch.domain.BranchInfo;
-import com.ppc.ffs.employee.adapter.out.persistence.entity.Employee;
+import com.ppc.ffs.employee.domain.EmployeeInfo;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,19 +19,33 @@ public class SelectBranchService implements SelectBranchUseCase {
 	private final SelectBranchPort selectBranchPort;
 	
 	@Override
-	public List<BranchInfo> selectAllBranch() {
-		return selectBranchPort.findAllBranch();
+	public BranchSelectResponse selectAllBranch() {
+		List<BranchInfo> list = selectBranchPort.findAllBranch();
+		BranchSelectResponse response = new BranchSelectResponse();
+		response.setCode(200);
+		response.setMessage("success");
+		response.setBranchList(list);
+		return response;
 	}
 
 	@Override
-	public BranchInfo selectBranch(Long id) {
-		return selectBranchPort.findBranchInfoById(id);
+	public BranchSelectResponse selectBranch(Long id) {
+		BranchInfo branchInfo = selectBranchPort.findBranchInfoById(id);
+		BranchSelectResponse response = new BranchSelectResponse();
+		response.setCode(200);
+		response.setMessage("success");
+		response.setBranch(branchInfo);
+		return response;
 	}
 
 	@Override
-	public List<Employee> selectBranchEmployee(Long id) {
-		List<Employee> branch = selectBranchPort.findEmployeeListById(id);
-		return branch;
+	public BranchSelectResponse selectBranchEmployee(Long id) {
+		List<EmployeeInfo> employeeInfoList = selectBranchPort.findEmployeeListById(id);
+		BranchSelectResponse response = new BranchSelectResponse();
+		response.setCode(200);
+		response.setMessage("success");
+		response.setEmployeeList(employeeInfoList);
+		return response;
 	}
 
 }

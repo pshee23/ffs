@@ -17,7 +17,7 @@ public class RegisterBranchService implements RegisterBranchUseCase {
 	private final RegisterBranchPort registerBranchPort;
 	
 	@Override
-	public BranchInfo registerBranch(BranchRegisterInfo createInfo) {
+	public long registerBranch(BranchRegisterInfo createInfo) {
 		return registerBranchPort.saveBranch(createInfo);
 	}
 	

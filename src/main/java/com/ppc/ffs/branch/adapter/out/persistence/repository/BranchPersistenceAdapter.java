@@ -13,6 +13,8 @@ import com.ppc.ffs.branch.application.port.out.SelectBranchPort;
 import com.ppc.ffs.branch.domain.BranchInfo;
 import com.ppc.ffs.branch.domain.BranchRegisterInfo;
 import com.ppc.ffs.employee.adapter.out.persistence.entity.Employee;
+import com.ppc.ffs.employee.adapter.out.persistence.repository.EmployeeInfoMapper;
+import com.ppc.ffs.employee.domain.EmployeeInfo;
 
 import lombok.RequiredArgsConstructor;
 
@@ -22,11 +24,12 @@ public class BranchPersistenceAdapter implements RegisterBranchPort, SelectBranc
 	
 	private final BranchRepository branchRepository;
 	private final BranchInfoMapper branchInfoMapper;
+	private final EmployeeInfoMapper employeeInfoMapper;
 	
 	@Override
-	public BranchInfo saveBranch(BranchRegisterInfo createInfo) {
+	public long saveBranch(BranchRegisterInfo createInfo) {
 		Branch branch = branchInfoMapper.mapBranchRegisterInfoToBranch(createInfo);
-		return branchInfoMapper.mapBranchToBranchInfo(branchRepository.save(branch));
+		return branchRepository.save(branch).getBranchId();
 	}
 
 	@Override
@@ -44,10 +47,11 @@ public class BranchPersistenceAdapter implements RegisterBranchPort, SelectBranc
 	}
 	
 	@Override
-	public List<Employee> findEmployeeListById(Long id) {
+	public List<EmployeeInfo> findEmployeeListById(Long id) {
 		Optional<Branch> branchOptional = branchRepository.findById(id);
 		Branch branch = branchOptional.orElseThrow(EntityNotFoundException::new);
-		
-		return branch.getEmployeeList(); // TODO EmployeeInfo로 변환?
+		List<Employee> employeeList = branch.getEmployeeList();
+		List<EmployeeInfo> infoList = employeeInfoMapper.mapToDomainEntity(employeeList);
+		return infoList;
 	}
 }

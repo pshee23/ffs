@@ -1,12 +1,9 @@
 package com.ppc.ffs.branch.application.port.in;
 
-import java.util.List;
-
-import com.ppc.ffs.branch.domain.BranchInfo;
-import com.ppc.ffs.employee.adapter.out.persistence.entity.Employee;
+import com.ppc.ffs.branch.adapter.in.web.form.BranchSelectResponse;
 
 public interface SelectBranchUseCase {
-	List<BranchInfo> selectAllBranch();
-	BranchInfo selectBranch(Long id);
-	List<Employee> selectBranchEmployee(Long id);
+	BranchSelectResponse selectAllBranch();
+	BranchSelectResponse selectBranch(Long id);
+	BranchSelectResponse selectBranchEmployee(Long id);
 }

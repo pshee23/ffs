@@ -4,5 +4,5 @@ import com.ppc.ffs.employee.domain.ModifyEmployeeInfo;
 
 public interface UpdateEmployeePort {
 
-    void updateEmployee(ModifyEmployeeInfo modifyEmployeeInfo);
+    Long updateEmployee(ModifyEmployeeInfo modifyEmployeeInfo);
 }

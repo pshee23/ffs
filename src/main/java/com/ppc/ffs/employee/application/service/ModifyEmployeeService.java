@@ -13,9 +13,7 @@ public class ModifyEmployeeService implements ModifyEmployeeUseCase {
     private final UpdateEmployeePort updateEmployeePort;
 
     @Override
-    public void modifyEmployeeInfo(ModifyEmployeeInfo modifyEmployeeInfo) {
-
-        updateEmployeePort.updateEmployee(modifyEmployeeInfo);
-
+    public Long modifyEmployeeInfo(ModifyEmployeeInfo modifyEmployeeInfo) {
+        return updateEmployeePort.updateEmployee(modifyEmployeeInfo);
     }
 }

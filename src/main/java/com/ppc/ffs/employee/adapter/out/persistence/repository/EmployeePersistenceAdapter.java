@@ -45,7 +45,7 @@ public class EmployeePersistenceAdapter implements
     }
 
     @Override
-    public void updateEmployee(ModifyEmployeeInfo modifyEmployeeInfo) {
+    public Long updateEmployee(ModifyEmployeeInfo modifyEmployeeInfo) {
         Optional<Employee> employeeOptional = employeeRepository.findById(modifyEmployeeInfo.getEmployeeId());
         Employee employee = employeeOptional.orElseThrow(EntityNotFoundException::new);
 
@@ -60,6 +60,8 @@ public class EmployeePersistenceAdapter implements
 
         employee.updateEmployeeInfo(branch, responsibility, address, phoneNumber, status);
         employeeRepository.save(employee);
+
+        return employee.getEmployeeId();
     }
 }
 

@@ -4,5 +4,5 @@ import com.ppc.ffs.employee.domain.ModifyEmployeeInfo;
 
 public interface ModifyEmployeeUseCase {
 
-    void modifyEmployeeInfo(ModifyEmployeeInfo modifyEmployeeInfo);
+    Long modifyEmployeeInfo(ModifyEmployeeInfo modifyEmployeeInfo);
 }

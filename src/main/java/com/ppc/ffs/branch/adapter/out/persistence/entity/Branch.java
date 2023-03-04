@@ -17,10 +17,12 @@ import com.ppc.ffs.member.adapter.out.persistence.entity.Member;
 import com.ppc.ffs.product.adapter.out.persistence.entity.Product;
 import com.ppc.ffs.purchase.adapter.out.persistence.entity.PurchaseHistory;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Entity
 @NoArgsConstructor
 @Table(name = "BRANCH")

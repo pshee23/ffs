@@ -1,35 +1,23 @@
-package com.ppc.ffs.branch.application.service;
+package com.ppc.ffs.branch.adapter.out.persistence.repository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import com.ppc.ffs.branch.adapter.out.persistence.entity.Branch;
 import com.ppc.ffs.branch.domain.BranchInfo;
 import com.ppc.ffs.branch.domain.BranchRegisterInfo;
 
-import lombok.RequiredArgsConstructor;
+@Component
+public class BranchInfoMapper {
 
-@Service
-@RequiredArgsConstructor
-public class MappingBranchService {
-	
 	public Branch mapBranchRegisterInfoToBranch(BranchRegisterInfo createInfo) {
 		Branch branch = new Branch();
 		branch.setName(createInfo.getName());
 		branch.setAddress(createInfo.getAddress());
 		branch.setPhoneNumber(createInfo.getPhoneNumber());
 		return branch;
-	}
-	
-	public BranchInfo mapBranchToBranchInfo(Optional<Branch> branch) {
-		if(branch.isEmpty()) {
-			return BranchInfo.builder().build();
-		} else {
-			return mapBranchToBranchInfo(branch.get());
-		}
 	}
 
 	public BranchInfo mapBranchToBranchInfo(Branch branch) {

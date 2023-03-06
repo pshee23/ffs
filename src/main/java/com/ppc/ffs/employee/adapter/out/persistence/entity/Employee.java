@@ -17,12 +17,29 @@ import java.util.List;
 @Table(name = "EMPLOYEE")
 public class Employee {
 
+    /**
+     * 직책
+     */
     @Getter
     @RequiredArgsConstructor
     public enum Responsibility {
         CEO("대표"),
         MANAGER("매니저"),
         TRAINER("트레이너");
+
+        private final String text;
+    }
+
+    /**
+     * 재직 상태
+     */
+    @Getter
+    @RequiredArgsConstructor
+    public enum Status {
+        DURING_OFFICE("재직"),
+        LEAVE_OF_ABSENCE("휴직"),
+        QUIT("퇴직");
+
 
         private final String text;
     }
@@ -102,5 +119,13 @@ public class Employee {
         if(lesson.getEmployee() == null || !lesson.getEmployee().equals(this)) {
             lesson.setEmployee(this);
         }
+    }
+
+    public void updateEmployeeInfo(Branch branch, String responsibility, String address, String phoneNumber, String status) {
+        this.setBranch(branch);
+        this.responsibility = responsibility;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.status = status;
     }
 }

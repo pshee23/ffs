@@ -6,6 +6,9 @@ import com.ppc.ffs.employee.domain.EmployeeInfo;
 import com.ppc.ffs.employee.domain.RegisterEmployeeInfo;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class EmployeeInfoMapper {
 
@@ -25,6 +28,17 @@ public class EmployeeInfoMapper {
                 .passwordType(employee.getPasswordType())
                 .passwordSalt(employee.getPasswordSalt())
                 .build();
+    }
+
+    public List<EmployeeInfo> mapToDomainEntityList(List<Employee> employeeList) {
+        List<EmployeeInfo> employeeInfoList = new ArrayList<>();
+
+        for(Employee employee : employeeList) {
+            EmployeeInfo employeeInfo = this.mapToDomainEntity(employee);
+            employeeInfoList.add(employeeInfo);
+        }
+
+        return employeeInfoList;
     }
 
     Employee mapToEmployee(RegisterEmployeeInfo registerEmployeeInfo, Branch branch) {

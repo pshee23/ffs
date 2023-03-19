@@ -6,6 +6,7 @@ import com.ppc.ffs.product.adapter.out.persistence.entity.Product;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +37,9 @@ public class Pt {
     @Column(name = "PRICE_PER_SESSON")
     private int pricePerSession;
 
+    @Column(name = "REGISTER_DATE")
+    private LocalDateTime registerDate;
+
     @OneToMany(mappedBy = "pt")
     private List<Lesson> lessonList = new ArrayList<>();
 
@@ -57,6 +61,10 @@ public class Pt {
 
     public void addLesson(Lesson lesson) {
         this.lessonList.add(lesson);
+
+        if(this.totalCount > useCount) {
+            this.useCount--;
+        }
 
         if(lesson.getPt() == null || !lesson.getPt().equals(this)) {
             lesson.setPt(this);

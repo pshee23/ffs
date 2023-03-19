@@ -1,12 +1,10 @@
 package com.ppc.ffs.employee.adapter.in.web.controller;
 
 import com.ppc.ffs.employee.adapter.in.web.form.EmployeeInfoResponse;
-import com.ppc.ffs.employee.adapter.in.web.form.RegisterEmployeeRequest;
 import com.ppc.ffs.employee.application.port.in.GetEmployeeInfoQuery;
 import com.ppc.ffs.employee.domain.EmployeeInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +22,8 @@ public class SelectEmployeeInfoController {
         EmployeeInfo employeeInfo = getEmployeeInfoQuery.getEmployeeInfo(employeeId);
         EmployeeInfoResponse employeeInfoResponse = mapToEmployeeInfoResponse(employeeInfo);
 
-        return ResponseEntity.status(HttpStatus.OK).body(employeeInfoResponse);
+        log.info("Response to select employee info. {}", employeeInfoResponse);
+        return ResponseEntity.status(employeeInfoResponse.getResultCode().getStatus()).body(employeeInfoResponse);
     }
 
     private EmployeeInfoResponse mapToEmployeeInfoResponse(EmployeeInfo employeeInfo) {

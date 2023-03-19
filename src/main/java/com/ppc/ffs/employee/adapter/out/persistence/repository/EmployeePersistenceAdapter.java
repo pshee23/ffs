@@ -35,6 +35,14 @@ public class EmployeePersistenceAdapter implements
     }
 
     @Override
+    public Employee selectEmployee(Long employeeId) {
+        Optional<Employee> employeeOptional = employeeRepository.findById(employeeId);
+        Employee employee = employeeOptional.orElseThrow(EntityNotFoundException::new);
+
+        return employee;
+    }
+
+    @Override
     public Employee insertEmployee(RegisterEmployeeInfo registerEmployeeInfo) {
         Long branchId = registerEmployeeInfo.getBranchId();
         Optional<Branch> branchOptional = branchRepository.findById(branchId);

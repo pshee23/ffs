@@ -4,47 +4,78 @@ import com.ppc.ffs.member.adapter.out.persistence.entity.Member;
 import com.ppc.ffs.member.application.port.out.MemberPort;
 import com.ppc.ffs.member.application.service.MemberUtil;
 import com.ppc.ffs.member.domain.MemberInfo;
+import com.ppc.ffs.util.CommonService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+@RequiredArgsConstructor
+@Repository
 public class MemberPersistenceAdapter implements MemberPort {
 
-    private MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
+
+    private final MemberInfoMapper memberInfoMapper;
 
     @Override
-    public Member saveMember(Member member) {
-         return memberRepository.save(member);
-    }
+    public Long saveMember(MemberInfo memberInfo) {
+        String passwordType = "";//todo 설정파일에서 가져오기 ffs.yaml
+        String passwordSalt = CommonService.makeKey(24);
 
-    public Optional<Member> findById(Long memberId) {
-        return memberRepository.findById(memberId);
-    }
+        //todo 패스워드 암호화 처리 필요
+        //String encrypt_password = memberInfo.getLoginPassword() + passwordSalt;
 
-    @Override
-    public Member findByLoginIdAndLoginPassword(String loginId, String loginPassword) {
-        return memberRepository.findByLoginIdAndLoginPassword(loginId,loginPassword);
-    }
-
-    @Override
-    public List<Member> findAll() {
-        return memberRepository.findAll();
-    }
-
-    @Override
-    public List<Member> findByNameOrLoginId(String name, String loginId) {
-        return memberRepository.findByNameOrLoginId(name,loginId);
+        Member member  = Member.builder()
+                .name(memberInfo.getName())
+                .loginId(memberInfo.getLoginId())
+                .loginPassword(memberInfo.getLoginPassword())
+                .passwordType(passwordType)
+                .passwordSalt(passwordSalt)
+                .status(memberInfo.getStatus())
+                .regDate(new Date())
+                .build();
+        return memberRepository.save(member).getMemberId();
     }
 
     @Override
-    public List<Member> findByNameOrLoginId(String name, String loginId, Pageable pageable) {
-        return memberRepository.findByNameOrLoginId(name,loginId,pageable);
+    public MemberInfo findByMemberIdAndLoginIdAndLoginPassword(Long memberId, String loginId, String loginPassword) {
+        Member member = memberRepository.findByMemberIdAndLoginIdAndLoginPassword(memberId,loginId,loginPassword);
+        return memberInfoMapper.mapMemberToMemberInfo(member);
+    }
+
+    public MemberInfo findById(Long memberId) {
+        Optional<Member> memberOptional =  memberRepository.findById(memberId);
+        if(memberOptional.isEmpty()){
+            return null;
+        }
+        return memberInfoMapper.mapMemberToMemberInfo(memberOptional.get());
+    }
+
+    @Override
+    public List<MemberInfo> findAll() {
+        List<Member> memberList = memberRepository.findAll();
+        return memberInfoMapper.mapMemberListToMemberInfoList(memberList);
+    }
+
+    @Override
+    public List<MemberInfo> findByNameOrLoginId(String name, String loginId) {
+        List<Member> memberInfoList = memberRepository.findByNameOrLoginId(name,loginId);
+        return memberInfoMapper.mapMemberListToMemberInfoList(memberInfoList);
+    }
+
+    @Override
+    public List<MemberInfo> findByNameOrLoginId(String name, String loginId, Pageable pageable) {
+        List<Member> memberList = memberRepository.findByNameOrLoginId(name,loginId,pageable);
+        return memberInfoMapper.mapMemberListToMemberInfoList(memberList);
     }
 
     @Override
     public MemberInfo findByLoginId(String loginId) {
 
-        return MemberUtil.getInstance().convertMemberToBean(memberRepository.findByLoginId(loginId));
+        return memberInfoMapper.mapMemberToMemberInfo(memberRepository.findByLoginId(loginId));
     }
 }

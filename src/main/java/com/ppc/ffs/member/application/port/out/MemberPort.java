@@ -9,17 +9,17 @@ import java.util.Optional;
 
 public interface MemberPort {
 
-    Member saveMember(Member member);
+    Long saveMember(MemberInfo memberInfo);
 
-    Member findByLoginIdAndLoginPassword(String loginId, String loginPassword);
+    MemberInfo findByMemberIdAndLoginIdAndLoginPassword(Long memberId, String loginId, String loginPassword);
 
-    List<Member> findAll();
+    List<MemberInfo> findAll();
 
-    List<Member> findByNameOrLoginId(String name,String loginId);
+    List<MemberInfo> findByNameOrLoginId(String name,String loginId);
 
-    List<Member> findByNameOrLoginId(String name, String loginId, Pageable pageable);
+    List<MemberInfo> findByNameOrLoginId(String name, String loginId, Pageable pageable);
 
     MemberInfo findByLoginId(String loginId);
 
-    Optional<Member> findById(Long memberId);
+    MemberInfo findById(Long memberId);
 }

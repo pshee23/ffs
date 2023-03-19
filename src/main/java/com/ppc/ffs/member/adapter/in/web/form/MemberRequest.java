@@ -1,5 +1,6 @@
 package com.ppc.ffs.member.adapter.in.web.form;
 
+import com.ppc.ffs.member.domain.MemberInfo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,5 +23,17 @@ public class MemberRequest {
     private Long branchId;
 
     private Long employeeId;
+
+    public MemberInfo of(){
+        return MemberInfo.builder()
+                .name(name)
+                .memberId(memberId)
+                .status(status)
+                .loginId(loginId)
+                .loginPassword(loginPassword)
+                .branchId(branchId)
+                .employeeId(employeeId)
+                .build();
+    }
 
 }

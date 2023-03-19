@@ -7,10 +7,7 @@ import com.ppc.ffs.locker.adapter.out.persistence.entity.Locker;
 import com.ppc.ffs.membership.adapter.out.persistence.entity.Membership;
 import com.ppc.ffs.pt.adapter.out.persistence.entity.Pt;
 import com.ppc.ffs.purchase.adapter.out.persistence.entity.PurchaseHistory;
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -19,8 +16,10 @@ import java.util.List;
 
 
 @Getter
-@NoArgsConstructor
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "MEMBER", uniqueConstraints = {@UniqueConstraint(name = "LOGINID_UNIQUE", columnNames = {"LOGIN_ID"})})
 public class Member {
 
@@ -57,29 +56,13 @@ public class Member {
 
     @Column(name = "REG_DATE")
     private Date regDate;
-    @Builder
-    public Member(Long memberId, Branch branch, Employee employee, String name, String status, String loginId, String loginPassword, String passwordType, String passwordSalt,Date regDate) {
-        this.memberId = memberId;
-        this.branch = branch;
-        this.employee = employee;
+
+
+    public void updateMember(String loginId,String name,String status ){
         this.name = name;
         this.status = status;
         this.loginId = loginId;
-        this.loginPassword = loginPassword;
-        this.passwordType = passwordType;
-        this.passwordSalt = passwordSalt;
-        this.regDate = regDate;
     }
-
-//    @Builder
-//    public Member(String name, String status, String loginId, String loginPassword, String passwordType, String passwordSalt) {
-//        this.name = name;
-//        this.status = status;
-//        this.loginId = loginId;
-//        this.loginPassword = loginPassword;
-//        this.passwordType = passwordType;
-//        this.passwordSalt = passwordSalt;
-//    }
 
     @OneToOne(mappedBy = "member")
     private Membership membership;

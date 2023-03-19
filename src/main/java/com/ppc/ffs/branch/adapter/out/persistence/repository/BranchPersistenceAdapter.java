@@ -51,7 +51,7 @@ public class BranchPersistenceAdapter implements RegisterBranchPort, SelectBranc
 		Optional<Branch> branchOptional = branchRepository.findById(id);
 		Branch branch = branchOptional.orElseThrow(EntityNotFoundException::new);
 		List<Employee> employeeList = branch.getEmployeeList();
-		List<EmployeeInfo> infoList = employeeInfoMapper.mapToDomainEntity(employeeList);
+		List<EmployeeInfo> infoList = employeeInfoMapper.mapToDomainEntityList(employeeList);
 		return infoList;
 	}
 }

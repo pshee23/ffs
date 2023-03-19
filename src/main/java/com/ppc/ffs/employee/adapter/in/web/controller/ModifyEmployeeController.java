@@ -1,5 +1,6 @@
 package com.ppc.ffs.employee.adapter.in.web.controller;
 
+import com.ppc.ffs.common.exception.ServiceResultCodeException;
 import com.ppc.ffs.employee.adapter.in.web.form.ModifyEmployeeRequest;
 import com.ppc.ffs.employee.application.port.in.ModifyEmployeeUseCase;
 import com.ppc.ffs.employee.domain.ModifyEmployeeInfo;
@@ -22,7 +23,11 @@ public class ModifyEmployeeController {
             (@PathVariable Long employeeId, @RequestBody ModifyEmployeeRequest modifyEmployeeRequest) {
         ModifyEmployeeInfo modifyEmployeeInfo = mapRequestToModifyEmployeeInfo(employeeId, modifyEmployeeRequest);
 
-        modifyEmployeeUsecase.modifyEmployeeInfo(modifyEmployeeInfo);
+        try {
+            modifyEmployeeUsecase.modifyEmployeeInfo(modifyEmployeeInfo);
+        } catch (ServiceResultCodeException se) {
+            throw se;
+        }
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
